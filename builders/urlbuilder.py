@@ -11,7 +11,19 @@ valid_interfaces = {
     ]
 }
 
-def get_url(interfaceName, methodName, version, parameters):
+def get_player_summary():
+    return __get_url('ISteamUser', 'GetPlayerSummaries', 'v0002', {
+        'steamids': settings.steam_user_id
+    })
+
+def get_player_owned_games():
+    return __get_url('IPlayerService', 'GetOwnedGames', 'v0001', {
+        'steamid': settings.steam_user_id,
+        'include_appinfo':'1',
+        'include_played_free_games':'1'
+    })
+
+def __get_url(interfaceName, methodName, version, parameters):
     if interfaceName not in valid_interfaces:
         raise Exception('The interfaceName provided is not supported')
 
@@ -30,15 +42,3 @@ def get_url(interfaceName, methodName, version, parameters):
         url += '&' + key + '=' + value
 
     return url
-
-def get_player_summary():
-    return get_url('ISteamUser', 'GetPlayerSummaries', 'v0002', {
-        'steamids': settings.steam_user_id
-    })
-
-def get_player_owned_games():
-    return get_url('IPlayerService', 'GetOwnedGames', 'v0001', {
-        'steamid': settings.steam_user_id,
-        'include_appinfo':'1',
-        'include_played_free_games':'1'
-    })
