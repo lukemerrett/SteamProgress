@@ -15,3 +15,7 @@ class TestUrlBuilder(unittest.TestCase):
     def test_get_list_of_games_never_played_returns_list_of_games(self):
         games_never_played = playtime.get_list_of_games_never_played()
         self.assertTrue(isinstance(games_never_played, list))
+
+    def test_choose_a_random_never_played_game_to_play_returns_a_game(self):
+        game_to_play = playtime.choose_a_random_never_played_game_to_play()
+        self.assertTrue(isinstance(game_to_play, str))

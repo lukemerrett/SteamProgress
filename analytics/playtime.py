@@ -1,5 +1,6 @@
 __author__ = 'Luke Merrett'
 
+import random
 from clients.steamapi import SteamApiClient
 
 def get_total_playtime_for_last_two_weeks():
@@ -34,6 +35,16 @@ def get_list_of_games_never_played():
 
     return games_never_played
 
+def choose_a_random_never_played_game_to_play():
+    """
+    Gets a single random games from the list of games never played
+    that you should really play now.
+    :return: A game to play that you've never played
+    """
+    games_never_played = get_list_of_games_never_played()
+
+    random_int = random.randrange(games_never_played.__len__())
+    return games_never_played[random_int]
 
 def __add_numeric_key_values(response, key_to_add):
     total = 0
