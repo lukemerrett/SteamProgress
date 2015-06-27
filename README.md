@@ -17,6 +17,6 @@ Can choose a random game from your Steam collection that you've never played.
 
 ## List All Games
 
-Lists all games within your account and whether they are installed
+Lists all games within your account, whether they are installed and how long they've been played for.
 
     usage: list_all_games.py
