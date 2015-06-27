@@ -44,11 +44,11 @@ def choose_a_random_game_to_play(choose_never_played, choose_installed):
                 games_installed.append(game)
         games = games_installed
 
-    unignored_games = []
+    unexcluded_games = []
     for game in games:
-        if game['name'] not in settings.ignored_games:
-            unignored_games.append(game)
-    games = unignored_games
+        if game['name'] not in settings.excluded_games:
+            unexcluded_games.append(game)
+    games = unexcluded_games
 
     if games.__len__() == 0:
         return False, None
