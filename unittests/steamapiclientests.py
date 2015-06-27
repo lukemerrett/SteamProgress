@@ -18,6 +18,6 @@ class SteamAPIClientTests(unittest.TestCase):
         self.assertEqual(settings.steam_user_id, player['steamid'])
 
     def test_get_player_owned_games_returns_json_dictionary(self):
-        json =  self.client.get_player_owned_games()
-        self.assertTrue(isinstance(json, dict))
-        self.assertTrue(isinstance(json['response']['games'], list))
+        games =  self.client.get_player_owned_games()
+        self.assertTrue(isinstance(games, list))
+        self.assertTrue(isinstance(games[0], dict))

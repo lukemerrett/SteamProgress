@@ -10,7 +10,8 @@ class SteamApiClient:
         pass
 
     def get_player_owned_games(self):
-        return self.__get_json_from_url(urlbuilder.get_player_owned_games())
+        response = self.__get_json_from_url(urlbuilder.get_player_owned_games())
+        return response['response']['games']
 
     @staticmethod
     def __get_json_from_url(url):

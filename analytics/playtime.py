@@ -10,16 +10,16 @@ def get_total_playtime_for_last_two_weeks():
     Calculates the total time in minutes played in the last two weeks
     :return: The total playtime in minutes for the last two weeks
     """
-    response = SteamApiClient().get_player_owned_games()
-    return __add_numeric_key_values(response, 'playtime_2weeks')
+    games = SteamApiClient().get_player_owned_games()
+    return __add_numeric_key_values(games, 'playtime_2weeks')
 
 def get_total_playtime_ever():
     """
     Calculates the total time in minutes played ever
     :return: The total playtime in minutes ever
     """
-    response = SteamApiClient().get_player_owned_games()
-    return __add_numeric_key_values(response, 'playtime_forever')
+    games = SteamApiClient().get_player_owned_games()
+    return __add_numeric_key_values(games, 'playtime_forever')
 
 def choose_a_random_game_to_play(choose_never_played, choose_installed):
     """
@@ -27,7 +27,7 @@ def choose_a_random_game_to_play(choose_never_played, choose_installed):
     that you should really play now.
     :return: A game to play
     """
-    games = SteamApiClient().get_player_owned_games()['response']['games']
+    games = SteamApiClient().get_player_owned_games()
 
     if choose_never_played:
         games_never_played = []
@@ -50,10 +50,10 @@ def choose_a_random_game_to_play(choose_never_played, choose_installed):
     random_int = random.randrange(games.__len__())
     return True, games[random_int]['name']
 
-def __add_numeric_key_values(response, key_to_add):
+def __add_numeric_key_values(games, key_to_add):
     total = 0
 
-    for game in response['response']['games']:
+    for game in games:
         if key_to_add in game:
             total += game[key_to_add]
 
