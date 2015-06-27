@@ -7,7 +7,7 @@ steam_user_folder = 'Enter your user folder here, eg C:\\Program Files (x86)\\St
 
 # Maybe you brought some games you'll never play (how could you)
 # Add them in your local settings to exclude from the random game chooser
-ignored_games = []
+ignored_games = [ 'Game name to ignore']
 
 # API settings
 # Full template: http://api.steampowered.com/<interface name>/<method name>/v<version>/?key=<api key>&format=<format>.
