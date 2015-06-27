@@ -8,4 +8,7 @@ if __name__ == '__main__':
 
     for game in sorted(games, key=lambda game: game['name']):
         installed = 'Yes' if game['installed'] else 'No'
-        print ('Name: "' + game['name'] + '" Installed: ' + installed)
+        print (game['name'])
+        print('    Installed: ' + installed)
+        print('    Playtime in Minutes: ' + str(game['playtime_forever']))
+        print('')
