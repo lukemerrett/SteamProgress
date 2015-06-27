@@ -4,7 +4,7 @@ import settings
 import unittest
 from clients.steamapi import SteamApiClient
 
-class TestUrlBuilder(unittest.TestCase):
+class SteamAPIClientTests(unittest.TestCase):
     def setUp(self):
         self.client = SteamApiClient()
 

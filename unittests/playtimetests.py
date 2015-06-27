@@ -3,7 +3,7 @@ __author__ = 'Luke Merrett'
 import unittest
 from analytics import playtime
 
-class TestUrlBuilder(unittest.TestCase):
+class PlaytimeTests(unittest.TestCase):
     def test_get_total_playtime_for_last_two_weeks_returns_playtime(self):
         playtime_in_minutes = playtime.get_total_playtime_for_last_two_weeks()
         self.assertTrue(playtime_in_minutes > 0)
