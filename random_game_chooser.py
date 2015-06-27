@@ -25,10 +25,13 @@ def get_cmd_arguments():
 if __name__ == '__main__':
     args = get_cmd_arguments()
 
-    game_to_play = playtime.choose_a_random_game_to_play(
+    game_found, game_to_play = playtime.choose_a_random_game_to_play(
         args.never_played,
         args.installed
     )
 
-    print('You should totally play: "' + game_to_play + '"')
+    if not game_found:
+        print ('Couldn\'t find a game to play!')
+    else:
+        print('You should totally play: "' + game_to_play + '"')
     input()

@@ -13,17 +13,29 @@ class PlaytimeTests(unittest.TestCase):
         self.assertTrue(playtime_in_minutes > 0)
 
     def test_choose_a_random_game_to_play_returns_a_game(self):
-        game_to_play = playtime.choose_a_random_game_to_play(False, False)
-        self.assertTrue(isinstance(game_to_play, str))
+        game_found, game_to_play = playtime.choose_a_random_game_to_play(False, False)
+        if game_found:
+            self.assertTrue(isinstance(game_to_play, str))
+        else:
+            self.assertIsNone(game_to_play)
 
     def test_can_retrieve_a_game_thats_never_been_played(self):
-        game_to_play = playtime.choose_a_random_game_to_play(True, False)
-        self.assertTrue(isinstance(game_to_play, str))
+        game_found, game_to_play = playtime.choose_a_random_game_to_play(True, False)
+        if game_found:
+            self.assertTrue(isinstance(game_to_play, str))
+        else:
+            self.assertIsNone(game_to_play)
 
     def test_can_retrieve_an_installed_game(self):
-        game_to_play = playtime.choose_a_random_game_to_play(False, True)
-        self.assertTrue(isinstance(game_to_play, str))
+        game_found, game_to_play = playtime.choose_a_random_game_to_play(False, True)
+        if game_found:
+            self.assertTrue(isinstance(game_to_play, str))
+        else:
+            self.assertIsNone(game_to_play)
 
     def test_can_retrieve_an_installed_game_thats_never_been_played(self):
-        game_to_play = playtime.choose_a_random_game_to_play(True, True)
-        self.assertTrue(isinstance(game_to_play, str))
+        game_found, game_to_play = playtime.choose_a_random_game_to_play(True, True)
+        if game_found:
+            self.assertTrue(isinstance(game_to_play, str))
+        else:
+            self.assertIsNone(game_to_play)

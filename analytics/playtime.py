@@ -47,10 +47,10 @@ def choose_a_random_game_to_play(choose_never_played, choose_installed):
         games = installed_games
 
     if games.__len__() == 0:
-        return 'Could not find any games you can play!'
+        return False, None
 
     random_int = random.randrange(games.__len__())
-    return games[random_int]['name']
+    return True, games[random_int]['name']
 
 def __add_numeric_key_values(response, key_to_add):
     total = 0
