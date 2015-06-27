@@ -7,7 +7,6 @@ from builders import urlbuilder
 class SteamApiClient:
     def get_player_summary(self):
         return self.__get_json_from_url(urlbuilder.get_player_summary())
-        pass
 
     def get_player_owned_games(self):
         response = self.__get_json_from_url(urlbuilder.get_player_owned_games())
