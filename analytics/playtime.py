@@ -19,32 +19,29 @@ def get_total_playtime_ever():
     response = SteamApiClient().get_player_owned_games()
     return __add_numeric_key_values(response, 'playtime_forever')
 
-def get_list_of_games_never_played():
+def choose_a_random_game_to_play(choose_never_played, choose_installed):
     """
-    Gets a list of all the games that have never been played on this account
-    :return: A list of games you should really play
-    """
-    response = SteamApiClient().get_player_owned_games()
-
-    games_never_played = []
-
-    for game in response['response']['games']:
-        if 'playtime_forever' in game:
-            if game['playtime_forever'] == 0:
-                games_never_played.append(game['name'])
-
-    return games_never_played
-
-def choose_a_random_never_played_game_to_play():
-    """
-    Gets a single random games from the list of games never played
+    Gets a single random games from the list of games
     that you should really play now.
-    :return: A game to play that you've never played
+    :return: A game to play
     """
-    games_never_played = get_list_of_games_never_played()
+    games = SteamApiClient().get_player_owned_games()['response']['games']
 
-    random_int = random.randrange(games_never_played.__len__())
-    return games_never_played[random_int]
+    if choose_never_played:
+        games_never_played = []
+
+        for game in games:
+            if 'playtime_forever' in game:
+                if game['playtime_forever'] == 0:
+                    games_never_played.append(game)
+
+        games = games_never_played
+
+    if choose_installed:
+        pass
+
+    random_int = random.randrange(games.__len__())
+    return games[random_int]['name']
 
 def __add_numeric_key_values(response, key_to_add):
     total = 0
