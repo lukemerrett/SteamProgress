@@ -1,9 +1,9 @@
 __author__ = 'Luke Merrett'
 
-import os
 import random
 import settings
 from clients.steamapi import SteamApiClient
+from clients import installed_games
 
 def get_total_playtime_for_last_two_weeks():
     """
@@ -38,13 +38,11 @@ def choose_a_random_game_to_play(choose_never_played, choose_installed):
         games = games_never_played
 
     if choose_installed:
-        installed_games = []
-        installed_game_folders = os.listdir(settings.steam_user_folder)
+        games_installed = []
         for game in games:
-            appid = str(game['appid'])
-            if appid in installed_game_folders:
-                installed_games.append(game)
-        games = installed_games
+            if installed_games.is_game_in_installed_games_list(game):
+                games_installed.append(game)
+        games = games_installed
 
     if games.__len__() == 0:
         return False, None
