@@ -18,6 +18,9 @@ completed_games = ['Completed game name']
 steam_api_url = 'http://api.steampowered.com/'
 response_format = 'json'
 
+# Database settings
+sqlite_database_name = 'SteamProgress.db'
+
 # Override with your local settings, stops them being committed to GitHub
 try:
     from local_settings import *

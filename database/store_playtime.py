@@ -1,0 +1,59 @@
+__author__ = 'Luke Merrett'
+
+import settings
+import datetime
+from peewee import *
+from clients.steamapi import SteamApiClient
+
+db = SqliteDatabase(settings.sqlite_database_name, threadlocals=True)
+
+class BaseModel(Model):
+    class Meta:
+        database = db
+
+class PlaytimeInLast2Weeks(BaseModel):
+    """
+    Table holding details on games and their playtime over the last 2 weeks
+    """
+    game_name = TextField()
+    playtime_in_minutes = IntegerField()
+    date_captured = DateField(default=datetime.date.today())
+
+class PlaytimeOperations:
+    """
+    Gets all the playtime for the last 2 weeks and stores it in Sqlite
+    """
+    def __init__(self):
+        db.connect()
+        db.create_table(PlaytimeInLast2Weeks, True)
+
+    def get_and_store_playtime(self):
+        if PlaytimeInLast2Weeks.select().where(PlaytimeInLast2Weeks.date_captured == datetime.date.today()):
+            print('Playtime already captured for today, cancelling save operation')
+            return
+
+        games = SteamApiClient().get_player_owned_games()
+        games_played = []
+
+        for game in games:
+            if 'playtime_2weeks' in game:
+                games_played.append(game)
+
+        for game in games_played:
+            record = PlaytimeInLast2Weeks.create(game_name=game['name'], playtime_in_minutes=game['playtime_2weeks'])
+            record.save()
+
+    def print_all_stored_playtime(self):
+        playtime = PlaytimeInLast2Weeks.select().order_by(PlaytimeInLast2Weeks.date_captured.desc())
+
+        print('\nGame, Date Captured, Playtime in minutes')
+        print('----------------------------------------')
+        for time in playtime:
+            output = ', '.join([time.game_name, str(time.date_captured), str(time.playtime_in_minutes)])
+            print(output)
+
+if __name__ == '__main__':
+    s = PlaytimeOperations()
+
+    s.get_and_store_playtime()
+    s.print_all_stored_playtime()
