@@ -31,7 +31,7 @@ if __name__ == '__main__':
     )
 
     if not game_found:
-        print ('Couldn\'t find a game to play!')
+        print('Couldn\'t find a game to play!')
     else:
         print('You should totally play: "' + game_to_play + '"')
     input()
