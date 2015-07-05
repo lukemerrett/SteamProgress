@@ -28,7 +28,11 @@ class PlaytimeOperations:
         db.create_table(PlaytimeInLast2Weeks, True)
 
     def get_and_store_playtime(self):
-        if PlaytimeInLast2Weeks.select().where(PlaytimeInLast2Weeks.date_captured == datetime.date.today()):
+        records_for_today = PlaytimeInLast2Weeks.select().where(
+            PlaytimeInLast2Weeks.date_captured == datetime.date.today()
+        )
+
+        if records_for_today.count() > 0:
             print('Playtime already captured for today, cancelling save operation')
             return
 
@@ -51,9 +55,3 @@ class PlaytimeOperations:
         for time in playtime:
             output = ', '.join([time.game_name, str(time.date_captured), str(time.playtime_in_minutes)])
             print(output)
-
-if __name__ == '__main__':
-    s = PlaytimeOperations()
-
-    s.get_and_store_playtime()
-    s.print_all_stored_playtime()
