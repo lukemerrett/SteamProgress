@@ -62,3 +62,6 @@ local_settings.py
 # PyCharm
 .idea/
 database/SteamProgress.db
+
+# Repository specific
+SteamProgress.db
