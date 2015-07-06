@@ -44,6 +44,7 @@ class PlaytimeOperations:
                 games_played.append(game)
 
         for game in games_played:
+            print('Saving playtime for ' + game['name'])
             record = PlaytimeInLast2Weeks.create(game_name=game['name'], playtime_in_minutes=game['playtime_2weeks'])
             record.save()
 

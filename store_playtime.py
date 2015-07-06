@@ -6,4 +6,3 @@ if __name__ == '__main__':
     s = PlaytimeOperations()
 
     s.get_and_store_playtime()
-    s.print_all_stored_playtime()
