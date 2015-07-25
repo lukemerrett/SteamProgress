@@ -63,7 +63,7 @@ class PlaytimeOperations:
     def chart_stored_playtime(self):
         playtime = PlaytimeInLast2Weeks.select().order_by(PlaytimeInLast2Weeks.date_captured.desc())
 
-        bar_chart = pygal.Bar(title="Playtime over the last 2 weeks by date captured")
+        bar_chart = pygal.Bar(title="Playtime in minutes over the last 2 weeks by date captured")
 
         # Group by date captured
         time_by_date_captured = defaultdict(list)
