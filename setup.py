@@ -6,7 +6,7 @@ setup(
     name="SteamProgress",
     version="0.1",
     packages=find_packages(),
-    install_requires=['peewee'],
+    install_requires=['peewee', 'pygal', 'Pillow'],
     author="Luke Merrett",
     author_email="lukeamerrett@gmail.com",
     url='https://github.com/lukemerrett/SteamProgress',

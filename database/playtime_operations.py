@@ -2,8 +2,11 @@ __author__ = 'Luke Merrett'
 
 import settings
 import datetime
+import pygal
+import webbrowser
 from peewee import *
 from clients.steamapi import SteamApiClient
+from collections import defaultdict, OrderedDict
 
 db = SqliteDatabase(settings.sqlite_database_name, threadlocals=True)
 
@@ -56,3 +59,26 @@ class PlaytimeOperations:
         for time in playtime:
             output = ', '.join([time.game_name, str(time.date_captured), str(time.playtime_in_minutes)])
             print(output)
+
+    def chart_stored_playtime(self):
+        playtime = PlaytimeInLast2Weeks.select().order_by(PlaytimeInLast2Weeks.date_captured.desc())
+
+        bar_chart = pygal.Bar(title="Playtime over the last 2 weeks by day")
+
+        # Group by date captured
+        time_by_date_captured = defaultdict(list)
+        for time in playtime:
+            if not str(time.date_captured) in time_by_date_captured.keys():
+                time_by_date_captured[str(time.date_captured)] = time.playtime_in_minutes
+            else:
+                time_by_date_captured[str(time.date_captured)] += time.playtime_in_minutes
+
+        time_by_date_captured = OrderedDict(sorted(time_by_date_captured.items(), key=lambda t: t[0]))
+
+        bar_chart.x_labels = time_by_date_captured.keys()
+
+        bar_chart.add("Playtime", time_by_date_captured.values())
+
+        bar_chart.render_to_file(settings.target_chart_export_filename)
+
+        webbrowser.open_new(settings.target_chart_export_filename)

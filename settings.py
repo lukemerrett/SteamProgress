@@ -21,6 +21,9 @@ response_format = 'json'
 # Database settings
 sqlite_database_name = 'SteamProgress.db'
 
+# Charting settings
+target_chart_export_filename = 'stored_playtime.svg'
+
 # Override with your local settings, stops them being committed to GitHub
 try:
     from local_settings import *
