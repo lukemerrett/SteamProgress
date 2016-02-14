@@ -7,6 +7,8 @@ import webbrowser
 from peewee import *
 from clients.steamapi import SteamApiClient
 from collections import defaultdict, OrderedDict
+from datetime import date
+from dateutil.relativedelta import relativedelta
 
 db = SqliteDatabase(settings.sqlite_database_name, threadlocals=True)
 
@@ -61,9 +63,16 @@ class PlaytimeOperations:
             print(output)
 
     def chart_stored_playtime(self):
-        playtime = PlaytimeInLast2Weeks.select().order_by(PlaytimeInLast2Weeks.date_captured.desc())
+        four_months_ago = date.today() + relativedelta(months=-4)
 
-        bar_chart = pygal.Bar(title="Playtime in minutes over the last 2 weeks by date captured")
+        playtime = (
+            PlaytimeInLast2Weeks
+            .select()
+            .where(PlaytimeInLast2Weeks.date_captured >= four_months_ago)
+            .order_by(PlaytimeInLast2Weeks.date_captured.desc())
+        )
+
+        bar_chart = pygal.HorizontalBar(title="Playtime in minutes over the last 2 weeks by date captured")
 
         # Group by date captured
         time_by_date_captured = defaultdict(list)
@@ -73,7 +82,7 @@ class PlaytimeOperations:
             else:
                 time_by_date_captured[str(time.date_captured)] += time.playtime_in_minutes
 
-        time_by_date_captured = OrderedDict(sorted(time_by_date_captured.items(), key=lambda t: t[0]))
+        time_by_date_captured = OrderedDict(sorted(time_by_date_captured.items(), key=lambda t: t[0], reverse=True))
 
         bar_chart.x_labels = time_by_date_captured.keys()
 
